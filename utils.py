@@ -7,6 +7,7 @@ import pprint
 import scipy.misc
 import numpy as np
 import copy
+from skimage.transform import resize as imresize
 try:
     _imread = scipy.misc.imread
 except AttributeError:
@@ -45,8 +46,7 @@ class ImagePool(object):
 def load_test_data(image_path, fine_size=256):
     img = imread(image_path)
     #img = scipy.misc.imresize(img, [fine_size, fine_size])
-    from skimage.transform import resize
-    img = resize(img, [fine_size, fine_size])
+    img = imresize(img, [fine_size, fine_size])
     img = img/127.5 - 1
     return img
 
@@ -54,8 +54,8 @@ def load_train_data(image_path, load_size=286, fine_size=256, is_testing=False):
     img_A = imread(image_path[0])
     img_B = imread(image_path[1])
     if not is_testing:
-        img_A = scipy.misc.imresize(img_A, [load_size, load_size])
-        img_B = scipy.misc.imresize(img_B, [load_size, load_size])
+        img_A = imresize(img_A, [load_size, load_size])
+        img_B = imresize(img_B, [load_size, load_size])
         h1 = int(np.ceil(np.random.uniform(1e-2, load_size-fine_size)))
         w1 = int(np.ceil(np.random.uniform(1e-2, load_size-fine_size)))
         img_A = img_A[h1:h1+fine_size, w1:w1+fine_size]
@@ -65,8 +65,8 @@ def load_train_data(image_path, load_size=286, fine_size=256, is_testing=False):
             img_A = np.fliplr(img_A)
             img_B = np.fliplr(img_B)
     else:
-        img_A = scipy.misc.imresize(img_A, [fine_size, fine_size])
-        img_B = scipy.misc.imresize(img_B, [fine_size, fine_size])
+        img_A = imresize(img_A, [fine_size, fine_size])
+        img_B = imresize(img_B, [fine_size, fine_size])
 
     img_A = img_A/127.5 - 1.
     img_B = img_B/127.5 - 1.
@@ -115,7 +115,7 @@ def center_crop(x, crop_h, crop_w,
   h, w = x.shape[:2]
   j = int(round((h - crop_h)/2.))
   i = int(round((w - crop_w)/2.))
-  return scipy.misc.imresize(
+  return imresize(
       x[j:j+crop_h, i:i+crop_w], [resize_h, resize_w])
 
 def transform(image, npx=64, is_crop=True, resize_w=64):

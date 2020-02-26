@@ -195,8 +195,10 @@ class cyclegan(object):
 
         model_dir = "%s_%s" % (self.dataset_dir, self.image_size)
         checkpoint_dir = os.path.join(checkpoint_dir, model_dir)
+        print("->", model_dir, checkpoint_dir)
 
         ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
+        print("ckpt", ckpt, "ckpt.model_checkpoint_path", ckpt.model_checkpoint_path)
         if ckpt and ckpt.model_checkpoint_path:
             ckpt_name = os.path.basename(ckpt.model_checkpoint_path)
             self.saver.restore(self.sess, os.path.join(checkpoint_dir, ckpt_name))
@@ -246,6 +248,10 @@ class cyclegan(object):
 
         out_var, in_var = (self.testB, self.test_A) if args.which_direction == 'AtoB' else (
             self.testA, self.test_B)
+
+        print(sample_files)
+        print('./datasets/{}/*.*'.format(self.dataset_dir + '/testA'))
+        print('./datasets/{}/*.*'.format(self.dataset_dir + '/testB'))
 
         for sample_file in sample_files:
             print('Processing image: ' + sample_file)

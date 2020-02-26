@@ -44,7 +44,9 @@ class ImagePool(object):
 
 def load_test_data(image_path, fine_size=256):
     img = imread(image_path)
-    img = scipy.misc.imresize(img, [fine_size, fine_size])
+    #img = scipy.misc.imresize(img, [fine_size, fine_size])
+    from skimage.transform import resize
+    img = resize(img, [fine_size, fine_size])
     img = img/127.5 - 1
     return img
 
@@ -85,7 +87,8 @@ def imread(path, is_grayscale = False):
     if (is_grayscale):
         return _imread(path, flatten=True).astype(np.float)
     else:
-        return _imread(path, mode='RGB').astype(np.float)
+        #return _imread(path, mode='RGB').astype(np.float)
+        return _imread(path, pilmode='RGB').astype(np.float)
 
 def merge_images(images, size):
     return inverse_transform(images)
@@ -101,7 +104,9 @@ def merge(images, size):
     return img
 
 def imsave(images, size, path):
-    return scipy.misc.imsave(path, merge(images, size))
+    #return scipy.misc.imsave(path, merge(images, size))
+    import imageio
+    return imageio.imwrite(path, merge(images, size))
 
 def center_crop(x, crop_h, crop_w,
                 resize_h=64, resize_w=64):

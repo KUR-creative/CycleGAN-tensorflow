@@ -81,7 +81,8 @@ CUDA_VISIBLE_DEVICES=0 python main.py --dataset_dir=horse2zebra --phase=test --w
 ## Training and Test Details
 To train a model,  
 ```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --dataset_dir=/path/to/data/ 
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset_dir=/path/to/data/
+CUDA_VISIBLE_DEVICES=0 python main.py --dataset_dir=jk_all --load_size=33 --fine_size=32
 ```
 Models are saved to `./checkpoints/` (can be changed by passing `--checkpoint_dir=your_dir`).  
 

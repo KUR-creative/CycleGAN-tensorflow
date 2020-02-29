@@ -217,10 +217,10 @@ class cyclegan(object):
             load_train_data(batch_file, args.load_size, args.fine_size, is_testing=True) for batch_file in batch_files]
         sample_images = np.array(sample_images).astype(np.float32)
 
-        print("dA", dataA)
-        print("dB", dataB)
-        print("real_data:", self.real_data.shape)
-        print("sample_images:", sample_images.shape)
+        #print("dA", dataA)
+        #print("dB", dataB)
+        #print("real_data:", self.real_data.shape)
+        #print("sample_images:", sample_images.shape)
         fake_A, fake_B = self.sess.run(
             [self.fake_A, self.fake_B],
             feed_dict={self.real_data: sample_images}
